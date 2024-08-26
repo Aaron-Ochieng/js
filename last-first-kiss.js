@@ -9,8 +9,7 @@ function last(arr) {
 
 function kiss(arr) {
     const slice = []
-    s=arr.length;
-    slice.push(arr[s-1])
+    slice.push(arr[arr.length-1])
     slice.push(arr[0])
     return slice
 }
