@@ -13,7 +13,3 @@ function kiss(arr) {
     slice.push(arr[0])
     return slice
 }
-
-console.log(first("Aaron"))
-console.log(last("Aaron"))
-console.log(kiss(["Abraham","Emmanuel","Hamza"]))
