@@ -1,8 +1,8 @@
-function get(index) {
-    return sourceObject[index]
+function get(key) {
+    return sourceObject[key]
 }
 
-function set(index, value) {
-    sourceObject[index] = value;
-    return key
+function set(key, value) {
+    sourceObject[key] = value;
+    return value
 }
