@@ -3,5 +3,5 @@ function get(index) {
 }
 
 function set(index, value) {
-    ssourceObject[index] = value;
+    sourceObject[index] = value;
 }
