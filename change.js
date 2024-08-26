@@ -1,5 +1,7 @@
 function get(index) {
-    return index in sourceObject[index] ? sourceObject[index] : undefined;
+    if(index in sourceObject[index]){
+        return sourceObject[index]
+    }
 }
 
 function set(index, value) {
