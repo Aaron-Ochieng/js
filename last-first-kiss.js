@@ -14,6 +14,6 @@ function kiss(arr) {
     return slice
 }
 
-// console.log(first("Aaron"))
-// console.log(last("Aaron"))
-// console.log(kiss(["Abraham","Emmanuel","Hamza"]))
+console.log(first("Aaron"))
+console.log(last("Aaron"))
+console.log(kiss(["Abraham","Emmanuel","Hamza"]))
