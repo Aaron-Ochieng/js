@@ -2,5 +2,5 @@ const clone1 = { ...person }
 const clone2 = { ...person }
 const samePerson = { ...person }
 
-person.age += 1
-person.country = "FR"
+samePerson.age += 1
+samePerson.country = "FR"
