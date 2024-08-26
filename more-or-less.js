@@ -4,7 +4,7 @@ function more(num) {
 }
 
 function less(num) {
-    num - 1
+    return num - 1
 }
 
 function add(num1, num2) {
