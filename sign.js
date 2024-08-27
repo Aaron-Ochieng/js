@@ -1,5 +1,13 @@
 function sign(num) {
-    return num < 1 ? 0 : 1;
+    if (num === 0) {
+        return 0
+    }
+    if (num < 1) {
+        return -1
+    }
+    if (num > 1) {
+        return 1
+    }
 }
 
 function sameSign(a, b) {
@@ -17,5 +25,5 @@ function sameSign(a, b) {
     return false
 }
 
-// console.log(sameSign(1, 9))
-// console.log(Math.sign(1) == Math.sign(9))
+// console.log(sameSign(-2, -1))
+// console.log(Math.sign(-2) == Math.sign(-1))
