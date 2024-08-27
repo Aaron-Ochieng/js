@@ -3,7 +3,10 @@ function isPositive(num) {
 }
 
 function abs(num){
+    if (num == -0 || num == 0){
+        return 0
+    }
     return num < 1 ? num * -1 : num
 }
 
-// console.log(!isPositive(0))
+// console.log(abs(0))
