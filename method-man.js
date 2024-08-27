@@ -19,6 +19,7 @@ function whisper(str){
 function capitalize(str){
     const arr =  str.split('')
     const a = arr[0].toUpperCase()
-    return  [a,...arr.slice(1)].join('')
+    const a2 = [...arr.slice(1)].join('').toLowerCase()
+    return  a+a2
 }
-// console.log(words('a b c'))
+// console.log(capitalize('STR'))
