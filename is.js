@@ -10,3 +10,4 @@ is.obj = function (value) { return value !== null && typeof value === "object"; 
 is.fun = function (value) { return typeof value === "function"; };
 is.truthy = function (value) { return !!value; };
 is.falsy = function (value) { return !value; };
+is.arr = function (value) { return Array.isArray(value) }
