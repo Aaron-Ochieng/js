@@ -1,5 +1,5 @@
 function words(word) {
-    return word.split('');
+    return word.split(' ');
 }
 
 
@@ -21,4 +21,4 @@ function capitalize(str){
     const a = arr[0].toUpperCase()
     return  [a,...arr.slice(1)].join('')
 }
-// console.log(whisper("the quick brown fox jumped over the lazy dog"))
+// console.log(words('a b c'))
