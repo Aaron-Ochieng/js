@@ -1,11 +1,11 @@
 function getAcceleration(obj) {
 
-    if (typeof obj.f === "number" && typeof obj.m !== "number" && !!obj.f && !!obj.m) {
-        return f / m;
-    } else if (typeof obj.Δv === "number" && typeof obj.Δt === "number" && !!obj.Δv && !!Δt) {
-        return Δv / Δt;
+    if (typeof obj.f === "number" && typeof obj.m === "number") {
+        return obj.f / obj.m;
+    } else if (typeof obj.Δv === "number" && typeof obj.Δt === "number") {
+        return obj.Δv / obj.Δt;
     }
     return "impossible";
 }
 
-// console.log(getAcceleration({ d: 10, f: 2, Δv: 100 }))
+// console.log(getAcceleration({ f: 10, m: 5 }))
