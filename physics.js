@@ -1,9 +1,9 @@
 function getAcceleration(obj) {
     const { f, m, Δv, Δt } = obj;
 
-    if (f !== undefined && m !== undefined) {
+    if (typeof f === "number" && typeof m !== "number") {
         return f / m;
-    } else if (Δv !== undefined && Δt !== undefined) {
+    } else if (typeof Δv === "number" && typeof Δt === "number") {
         return Δv / Δt;
     } else {
         return "impossible";
