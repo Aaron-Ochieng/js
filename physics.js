@@ -1,11 +1,11 @@
 function getAcceleration(obj) {
-    const { f, m, Δv, Δt } = obj;
 
-    if (typeof f === "number" && typeof m !== "number") {
+    if (typeof obj.f === "number" && typeof obj.m !== "number" && !!obj.f && !!obj.m) {
         return f / m;
-    } else if (typeof Δv === "number" && typeof Δt === "number") {
+    } else if (typeof obj.Δv === "number" && typeof obj.Δt === "number" && !!obj.Δv && !!Δt) {
         return Δv / Δt;
-    } else {
-        return "impossible";
     }
+    return "impossible";
 }
+
+// console.log(getAcceleration({ d: 10, f: 2, Δv: 100 }))
