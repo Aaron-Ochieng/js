@@ -38,7 +38,7 @@ function keepLast(str) {
 }
 
 function keepFirstLast(str) {
-    if (str.length <= 2) {
+    if (str.length <= 4) {
         return str
     }
     let res = ""
@@ -53,4 +53,4 @@ function keepFirstLast(str) {
     return res
 }
 
-// console.log(keepFirstLast('abcdef'))
+console.log(keepFirstLast('afd'))
