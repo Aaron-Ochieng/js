@@ -1,23 +1,18 @@
-function slice(a, b, c) {
-    if (c > a.length - 1) return undefined
-    const end = c ? c : a.length;
-    let res = []
-    if (typeof a === Array.isArray) {
-
-        for (let i = 0; i < end; i++) {
-            res.push(a[i])
+function slice(input, start, end) {
+    start = start < 0 ? Math.max(input.length + start, 0) : start;
+    end = end === undefined || end > input.length ? input.length : end;
+    end = end < 0 ? Math.max(input.length + end, 0) : end;
+    let result = typeof input === 'string' ? '' : [];
+    for (let i = start; i < end; i++) {
+        if (typeof input === 'string') {
+            result += input[i];
+        } else {
+            result.push(input[i]);
         }
     }
-
-    if (typeof a === "string") {
-        let x = ""
-
-        for (let i = b; i < end; i++) {
-            x = x + a[i]
-        }
-        return x
-    }
-    return res
+    return result;
 }
 
-// console.log(slice("Aaron", 2, 7))
+
+
+// console.log(slice('abcdef', -2))
