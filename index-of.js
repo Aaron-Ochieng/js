@@ -11,10 +11,12 @@ function indexOf(arr, val, optional) {
     return -1
 }
 
-function lastIndexOf(arr, val) {
-    // let r = -1
-    for (let i = arr.length - 1; i >= 0; i--) {
-        if (arr[i] === val) return i
+function lastIndexOf(arr, val, optional) {
+    let startIndex = optional !== undefined ? optional : arr.length - 1;
+    for (let i = startIndex; i >= 0; i--) {
+        if (arr[i] === val) {
+            return i;
+        }
     }
     return -1;
 }
@@ -27,4 +29,4 @@ function includes(arr, val) {
     }
     return false
 }
-// console.log(lastIndexOf([0, 0, 't', 't'], 't', 3))
+console.log(lastIndexOf(['t', 0, 0,'t'], 't', 2))
