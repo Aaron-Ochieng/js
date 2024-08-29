@@ -1,21 +1,10 @@
 function multiply(a, b) {
-    let mult = 0
-    if (a === 0 || b === 0) {
-        return 0
+    let result = 0;
+    const positive = Math.abs(b);
+    for (let i = 0; i < positive; i++) {
+        result += a;
     }
-    if (a < 0 || b < 0) {
-        if (a < 0) a = a * -1
-        if (b < 0) b = b * -1
-
-        for (let i = 1; i <= b; i++) {
-            mult = mult + -a
-        }
-    }
-
-    for (let i = 1; i <= b; i++) {
-        mult = mult + a
-    }
-    return mult
+    return b < 0 ? -result : result;
 }
 
 const divide = (a, b) => {
