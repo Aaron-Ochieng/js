@@ -21,7 +21,8 @@ function cutFirstLast(str) {
 
 function keepFirst(str) {
     let res = ""
-    for (let i = 0; i < 2; i++) {
+    const len = str.length >= 2 ? 2 : str.length 
+    for (let i = 0; i < len; i++) {
         res = res + str[i]
     }
     return res
@@ -34,3 +35,6 @@ function keepLast(str) {
     }
     return res
 }
+
+
+console.log(keepFirst('a'))
