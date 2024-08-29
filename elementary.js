@@ -16,11 +16,11 @@ const divide = (a, b) => {
         absA -= absB;
         qt++;
     }
-    return (a < 0) !== (b < 0) ? -quotient : quotient;
+    return (a < 0) !== (b < 0) ? -qt : qt;
 };
 
 const modulo = (a, b) => {
     if (b === 0) throw new Error("ZeroDivisionError: integer division or modulo by zero");
-    const quotient = divide(a, b);
-    return a - multiply(quotient, b);
+    const qt = divide(a, b);
+    return a - multiply(qt, b);
 };
