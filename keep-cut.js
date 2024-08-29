@@ -1,0 +1,36 @@
+function cutFirst(str) {
+    return str.slice(2)
+}
+
+function cutLast(str) {
+    let res = ''
+    for (let i = 0; i < str.length - 2; i++) {
+        res = res + str[i]
+    }
+    return res
+}
+
+
+function cutFirstLast(str) {
+    let res = ""
+    for (let i = 2; i < str.length - 2; i++) {
+        res = res + str[i]
+    }
+    return res
+}
+
+function keepFirst(str) {
+    let res = ""
+    for (let i = 0; i < 2; i++) {
+        res = res + str[i]
+    }
+    return res
+}
+
+function keepLast(str) {
+    let res = ""
+    for (let i = str.length - 2; i < str.length; i++) {
+        res = res + str[i]
+    }
+    return res
+}
