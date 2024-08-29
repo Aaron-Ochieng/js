@@ -30,12 +30,27 @@ function keepFirst(str) {
 
 function keepLast(str) {
     let res = ""
-    const len = str.length >= 2 ? str.length - 2 : str.length-1
+    const len = str.length >= 2 ? str.length - 2 : str.length - 1
     for (let i = len; i < str.length; i++) {
         res = res + str[i]
     }
     return res
 }
 
+function keepFirstLast(str) {
+    if (str.length <= 2) {
+        return str
+    }
+    let res = ""
 
-console.log(keepLast('ab'))
+    for (let i = 0; i < 2; i++) {
+        res = res + str[i]
+    }
+
+    for (let i = str.length - 2; i <= str.length - 1; i++) {
+        res = res + str[i]
+    }
+    return res
+}
+
+// console.log(keepFirstLast('abcdef'))
