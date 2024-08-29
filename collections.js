@@ -64,18 +64,3 @@ const superTypeOf = (n) => {
                 const obj = Object.prototype.toString.call(n)
                     return obj.slice(8, -1);
 }
-
-// console.log(superTypeOf(undefined))3
-            }
-        }
-}
-            }
-}
-            }
-}
-            }
-}
-            }
-}
-            }
-}
