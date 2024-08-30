@@ -1,7 +1,9 @@
 function split(string, by) {
     if (typeof string === "string") {
         let res = []
-        if (!by) res.push(string)
+        if (!!by) {
+            res.push(string)
+        }
         if (by === '') res.push(...string)
         if (by) {
             let temp = ""
@@ -18,10 +20,11 @@ function split(string, by) {
             if (temp !== "") {
                 res.push(temp)
                 temp = ""
+                if (string.slice(string.length - len, string.length) === by) {
+                    res.push("")
+                }
             }
-            if (string.slice(string.length - len, string.length) === by) {
-                res.push("")
-            }
+
         }
         return res
     }
@@ -62,5 +65,5 @@ function join(arr, by) {
     }
 }
 
-// console.log(split('ee,ff,g,', ','))
-// console.log('ee,ff,g,'.split(","))
+// console.log(split('Riad', ''))
+// console.log('Riad'.split(""))
