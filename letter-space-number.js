@@ -1,11 +1,1 @@
-function letterSpaceNumber(str) {
-    const exprr = /([a-zA-Z]) (\d)(?!\d)/g;
-    let matches = [];
-    let match;
-    while ((match = exprr.exec(str)) !== null) {
-        matches.push(`${match[1]} ${match[2]}`);
-    }
-    return matches;
-}
-
-console.log(letterSpaceNumber('He is 8 or 9 years old, not 10.'))
+function ischar(val) { if ((val >= 'A' && val <= 'Z') || (val >= 'a' && val <= 'z')) { return true } return false } function isdigit(val) { if (val >= 0 && val <= 9) { return true } return false } function letterSpaceNumber(str) { let res = []    for (let i = 0; i < str.length; i++) { if (str[i] === " " && ischar(str[i - 1]) && !ischar(str[i + 2]) && isdigit(Number(str[i + 1])) && !isdigit(Number(str[i + 2]))) { res.push(str.slice(i - 1, i + 2)) } } return res }
