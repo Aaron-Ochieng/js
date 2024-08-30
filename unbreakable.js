@@ -68,5 +68,5 @@ function join(arr, by) {
     }
 }
 
-console.log(split('ee,ff,g,', ','))
-console.log('ee,ff,g,'.split(","))
+// console.log(split('ee,ff,g,', ','))
+// console.log('ee,ff,g,'.split(","))
