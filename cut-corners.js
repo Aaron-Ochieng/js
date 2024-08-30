@@ -2,99 +2,92 @@
 
 // console.log( [].concat(-3.7).join(''))
 
-function round(arr) {
-    let result = [];
-    for (let k = 0; k < arr.length; k++) {
-        let temp = "";
-        let numStr = arr[k] + "";
-
-        let decimalIndex = numStr.indexOf(".");
-
-        if (decimalIndex !== -1) {
-            temp = numStr.slice(0, decimalIndex);
-
-
-            if (Number(numStr[decimalIndex + 1]) >= 5) {
-                result.push(Number(temp) < 0 ? Number(temp) - 1 : Number(temp) + 1);
-            } else {
-                result.push(Number(temp));
-            }
-        } else {
-            result.push(Number(numStr));
+function round(number) {
+    let integer_part = 0;
+    let fractional_part;
+    
+    // Extract the integer part
+    if (number < 0) {
+        while (number <= -1) {
+            number += 1;
+            integer_part--;
+        }
+    } else {
+        while (number >= 1) {
+            number -= 1;
+            integer_part++;
         }
     }
-    return result;
-}
+    
+    // Calculate the fractional part
+    fractional_part = number;
 
-function ceil(arr) {
-    let result = [];
-
-    for (let i = 0; i < arr.length; i++) {
-        let temp = "";
-        let numStr = arr[i] + "";
-        let decimalIndex = numStr.indexOf(".");
-
-        if (decimalIndex !== -1) {
-            temp = numStr.slice(0, decimalIndex);
-            if (Number(numStr.slice(decimalIndex + 1)) > 0) {
-                result.push(Number(temp) < 0 ? Number(temp) : Number(temp) + 1);
-            } else {
-                result.push(Number(temp));
-            }
-        } else {
-            result.push(Number(numStr));
-        }
+    // Adjust rounding based on the fractional part
+    if (fractional_part >= 0.5 && number >= 0) {
+        integer_part += 1;
+    } else if (fractional_part <= -0.5 && number < 0) {
+        integer_part -= 1;
     }
-    return result;
+
+    return integer_part;
 }
 
+function floor(number) {
+    let integer_part = 0;
 
-
-function floor(arr) {
-    let result = [];
-
-    for (let i = 0; i < arr.length; i++) {
-        let temp = "";
-        let numStr = arr[i] + "";
-
-        let decimalIndex = numStr.indexOf(".");
-
-        if (decimalIndex !== -1) {
-            temp = numStr.slice(0, decimalIndex);
-
-
-            if (Number(numStr.slice(decimalIndex + 1)) > 0 && Number(temp) < 0) {
-                result.push(Number(temp) - 1);
-            } else {
-                result.push(Number(temp));
-            }
-        } else {
-
-            result.push(Number(numStr));
+    if (number < 0) {
+        while (number <= -1) {
+            number += 1;
+            integer_part--;
+        }
+    
+        if (number !== 0) {
+            integer_part -= 1;
+        }
+    } else {
+        while (number >= 1) {
+            number -= 1;
+            integer_part++;
         }
     }
 
-    return result;
+    return integer_part;
 }
 
+function trunc(number) {
+    let integer_part = 0;
 
-function trunc(arr) {
-    let result = [];
+    if (number > 0xfffffffff) {
+        number -= 0xfffffffff;
+        integer_part += 0xfffffffff;
+    }
+    
+    let is_negative = number < 0;
 
-    for (let i = 0; i < arr.length; i++) {
-        let temp = "";
-        let numStr = arr[i] + "";
-
-        let decimalIndex = numStr.indexOf(".");
-
-        if (decimalIndex !== -1) {
-            temp = numStr.slice(0, decimalIndex);
-            result.push(Number(temp));
-        } else {
-            result.push(Number(numStr));
-        }
+    if (is_negative) {
+        number = -number;
     }
 
-    return result;
+    while (number >= 1) {
+        number -= 1;
+        integer_part++;
+    }
+
+    return is_negative ? -integer_part : integer_part;
 }
+
+function ceil(number) {
+    let integer_part = trunc(number);
+    let fractional_part = number - integer_part;
+
+    // If there's any fractional part, adjust the integer part for positive numbers
+    if (fractional_part > 0) {
+        integer_part += 1;
+    }
+
+    return integer_part;
+}
+
+// console.log(ceil(-3.9));
+
 // console.log(round(9.9))
