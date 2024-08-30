@@ -1,13 +1,17 @@
 function nasa(num) {
     if (typeof num === "number") {
-        if (num % 5 === 0 && num % 3 === 0) {
-            return "NASA"
+        let result = [];
+        for (let i = 1; i <= num; i++) {
+            if (i % 3 === 0 && i % 5 === 0) {
+                result.push("NASA");
+            } else if (i % 3 === 0) {
+                result.push("NA");
+            } else if (i % 5 === 0) {
+                result.push("SA");
+            } else {
+                result.push(i.toString());
+            }
         }
-        if (num % 3 === 0) {
-            return "NA"
-        }
-        if (num % 5 === 0) {
-            return "SA"
-        }
+        return result.join(" ");
     }
 }
