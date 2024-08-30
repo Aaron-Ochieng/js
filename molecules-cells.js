@@ -4,6 +4,8 @@ const map = {
     "T": "C",
     "A": "T",
     "U": "A",
+    "T": "A",
+    "A": "U",
 }
 
 function RNA(str) {
