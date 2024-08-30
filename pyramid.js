@@ -1,16 +1,21 @@
-function pyramid(string, value) {
-    let result = "";
-
+const triangle = (string, value) => {
+    let res = ""
     for (let i = 1; i <= value; i++) {
-        const numChars = 2 * i - 1; // Number of characters for the current row
-        const numSpaces = value - i; // Number of leading spaces
-
-        // Generate the current row
-        const row = ' '.repeat(numSpaces) + string.repeat(numChars);
-
-        result += row + "\n";
+        if (i !== value) {
+            res += reprint(string, i) + "\n"
+        } else {
+            res += reprint(string, i)
+        }
     }
-    return result.slice(0, result.length - 1);
+    return res
 }
 
-console.log(pyramid("*", 5))
+const reprint = (string, n) => {
+    let res = ""
+    for (let i = 0; i < n; i++) {
+        res += string
+    }
+    return res
+}
+
+// console.log(pyramid("{}", 12))
