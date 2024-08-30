@@ -1,8 +1,8 @@
 const map = {
     "G": "C",
     "C": "G",
-    "T": "A",
-    "A": "U",
+    "T": "C",
+    "A": "T",
     "U": "A",
 }
 
@@ -32,4 +32,4 @@ function DNA(str) {
     return res;
 }
 
-// console.log(RNA("ATCG"))
+console.log(DNA('AUCG'))
