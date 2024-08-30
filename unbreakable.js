@@ -1,6 +1,7 @@
 function split(string, by) {
     if (typeof string === "string") {
         let res = [];
+        if (string === "") return [""]
         if (by === undefined || by === '') {
             if (by === '') {
                 for (let i = 0; i < string.length; i++) {
