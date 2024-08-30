@@ -1,32 +1,33 @@
 function split(string, by) {
     if (typeof string === "string") {
-        let res = []
-        if (!!by) {
-            res.push(string)
+        let res = [];
+        if (by === undefined || by === '') {
+            if (by === '') {
+                for (let i = 0; i < string.length; i++) {
+                    res.push(string[i]);
+                }
+            } else {
+                res.push(string);
+            }
+            return res;
         }
-        if (by === '') res.push(...string)
-        if (by) {
-            let temp = ""
-            const len = by.length
-            for (let i = 0; i < string.length; i++) {
-                if (string.slice(i, i + len) === by) {
-                    res.push(temp)
-                    temp = ""
-                    i = i + len - 1
-                } else {
-                    temp = temp + string[i]
-                }
-            }
-            if (temp !== "") {
-                res.push(temp)
-                temp = ""
-                if (string.slice(string.length - len, string.length) === by) {
-                    res.push("")
-                }
-            }
+        let temp = "";
+        const len = by.length;
 
+        for (let i = 0; i < string.length; i++) {
+            if (string.slice(i, i + len) === by) {
+                res.push(temp);
+                temp = "";
+                i += len - 1;
+            } else {
+                temp += string[i];
+            }
         }
-        return res
+        if (temp !== "") {
+            res.push(temp);
+        }
+
+        return res;
     }
 }
 
@@ -65,5 +66,5 @@ function join(arr, by) {
     }
 }
 
-// console.log(split('Riad', ''))
-// console.log('Riad'.split(""))
+// console.log(split('a b c',' '))
+// console.log('a b c'.split(" "))
