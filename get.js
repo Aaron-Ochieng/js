@@ -3,8 +3,10 @@ function get(a, b) {
     if (typeof a === "object") {
         const values = b.split('.')
         for (const value of values) {
-            if (value in a) {
-                clone = a[value]
+            if (clone && value in clone) {
+                clone = clone[value]
+            } else {
+                return undefined
             }
         }
     }
