@@ -59,9 +59,9 @@ function join(arr, by) {
     }
 }
 
-const arr1 = [1, 2, null, 4]
-const arr2 = [5, 6, 7, 6]
+// const arr1 = [1, 2, null, 4]
+// const arr2 = [5, 6, 7, 6]
 
-console.log(typeof arr1)
-console.log(arr1.join("*"))
-console.log(join(arr1, "*"))
+// console.log(typeof arr1)
+// console.log(arr1.join("*"))
+// console.log(join(arr1, "*"))
