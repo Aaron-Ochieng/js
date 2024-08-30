@@ -26,7 +26,9 @@ function split(string, by) {
         if (temp !== "") {
             res.push(temp);
         }
-
+        if (string.slice(string.length - len, string.length) === by) {
+            res.push("")
+        }
         return res;
     }
 }
@@ -66,5 +68,5 @@ function join(arr, by) {
     }
 }
 
-// console.log(split('a b c',' '))
-// console.log('a b c'.split(" "))
+console.log(split('ee,ff,g,', ','))
+console.log('ee,ff,g,'.split(","))
