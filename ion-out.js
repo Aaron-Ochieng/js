@@ -5,11 +5,14 @@ function ionOut(inputString) {
     // Initialize an empty array to store the result
     const result = [];
     arr_of_words.forEach(word => {
-        const index = word.indexOf('ion');
+        const index = word.indexOf('tion');
         if (index !== -1) {
-            result.push(word.slice(0, index));
+            result.push(word.slice(0, index+1));
         }
     });
 
     return result;
 }
+
+
+// console.log(ionOut('promotion, provision'))
