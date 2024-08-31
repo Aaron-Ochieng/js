@@ -1,7 +1,5 @@
-# piscine-js
+# Piscine js
 
-<details>
-<summary>How do I dropdown?</summary>
-<br>
-This is how you dropdown.
-</details>
+
+
+### **Piscine javascript** ([Zone 01 Kisumu Kenya](https://www.zone01kisumu.ke/))
