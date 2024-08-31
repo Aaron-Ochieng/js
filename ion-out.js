@@ -5,7 +5,7 @@ function ionOut(inputString) {
     // Initialize an empty array to store the result
     const result = [];
     arr_of_words.forEach(word => {
-        const index = word.indexOf('tion');
+        const index = word.indexOf('ion');
         if (index !== -1) {
             result.push(word.slice(0, index));
         }
