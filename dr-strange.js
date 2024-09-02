@@ -13,7 +13,7 @@ function timeTravel(x) {
     formattedDate.setHours(x.hour);
     formattedDate.setMinutes(x.minute);
     formattedDate.setSeconds(x.second);
-    return formattedDate.toString();
+    return formattedDate;
 }
 
 // console.log(addWeek(new Date('2025-08-11')))
@@ -24,3 +24,11 @@ function timeTravel(x) {
 //     second: 22,
 //   }).toString())
 
+
+// console.log(timeTravel({
+//     date: new Date('2020-05-29 23:25:22'),
+//     hour: 21,
+//     minute: 22,
+//     second: 22,
+// }).getTime())
+// console.log(new Date('2020-05-29 21:22:22').getTime())
