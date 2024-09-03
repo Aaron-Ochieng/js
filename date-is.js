@@ -8,7 +8,7 @@ const isValid = (date) => {
 
     return true
 }
-const isAfter = (date_1, date_2) => Date.parse(date_1) > Date.parse(date_2)
+const isAfter = (date_1, date_2) => new Date(date_1).getTime() > new Date(date_2).getTime()
 const isBefore = (date_1, date_2) => !isAfter(date_1, date_2)
-const isFuture = (date) => date > new Date()
-const isPast = (date) => !isFuture(date)
+const isFuture = (date) => isValid(date) && isAfter(date,new Date())
+const isPast = (date) => !isValid(date) && isBefore(date, new Date())
