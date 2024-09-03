@@ -7,7 +7,8 @@ const countLeapYears = (date) => {
             count++
         }
     }
-    return count
+    return count - 1
 }
 
 // console.log(countLeapYears(new Date()))
+console.log(countLeapYears(new Date('1664-08-09')))
