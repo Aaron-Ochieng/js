@@ -9,9 +9,9 @@ const matchCron = (cron, date) => {
         } else if (index === 2) {
             Cron.date = cr;
         } else if (index === 3) {
-            cron.month = cr;
+            Cron.month = cr;
         } else if (index === 4) {
-            cron.day = cr;
+            Cron.day = cr;
         }
     })
 
@@ -32,3 +32,4 @@ const matchCron = (cron, date) => {
 
 // console.log(matchCron('9 * * * *', new Date('2020-05-30 18:09:00')))
 // console.log(matchCron('9 * * * *', new Date('2020-05-30 19:21:00')))
+// console.log(matchCron('* * * * 1', new Date('2020-06-01 00:00:00')))
