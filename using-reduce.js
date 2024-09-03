@@ -1,14 +1,12 @@
 
-const array1 = [1, 2, 3, 4];
-const adder = arr => {
-    const sum = 0
-    return arr.reduce((a, b) =>
-        a + b,
-        sum,
+const adder = (arr, val) => {
+    return arr.reduce(
+        (acc, item) => acc + item,
+        val === undefined ? 0 : val
     );
 }
 
-const sumOrMul = arr => {
+const sumOrMul = (arr, value) => {
     return arr.reduce(
         (acc, item) => {
             if (item % 2 === 0) {
