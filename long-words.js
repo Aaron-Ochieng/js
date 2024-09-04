@@ -1,5 +1,5 @@
 // const test = ['Junior','Aaron']
-const fiveonwards = (value) => typeof value === 'string' && value.length <= 5;
+const fiveonwards = (value) => typeof value === 'string' && value.length >= 5;
 const longWords = arr => arr.every(fiveonwards)
 // console.log(longWords(test))
 
