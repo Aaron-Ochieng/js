@@ -1,4 +1,4 @@
-const  every=(array, test)=> {
+const  every=(array, tst)=> {
     for (var i = 0; i < array.length; i++) {
         if (!tst(array[i])) return false;
     }
