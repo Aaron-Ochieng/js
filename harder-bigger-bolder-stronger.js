@@ -1,5 +1,5 @@
 export const generateLetters = () => {
-    for (let i = 1; i <= 120; i++) {
+    for (let i = 0; i < 120; i++) {
         let letter = document.createElement("div");
         letter.style.fontSize = `${11 + i}px`;
         letter.textContent = String.fromCharCode(
