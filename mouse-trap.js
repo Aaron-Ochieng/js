@@ -101,12 +101,12 @@ document.body.addEventListener("mousemove", (e) => {
     moveCircle(e);
 });
 
-export const createCircle=(e)=> {
+export const createCircle = (e) => {
     if (e === undefined) return;
     new Circle(e.clientX - 25, e.clientY - 25);
 }
 
-export const moveCircle = (e)=> {
+export const moveCircle = (e) => {
     if (e === undefined || circles.length === 0) return;
     circles[circles.length - 1].move(e.clientX - 25, e.clientY - 25);
 }
