@@ -1,5 +1,5 @@
 import { gossips } from './data.js'
-export const grid = () => {
+export function grid() {
     let allChange = document.createElement('div')
     allChange.className = 'ranges'
     let width = document.createElement('input')
@@ -72,7 +72,7 @@ export const grid = () => {
 
 
 }
-const addGross = (goss) => {
+function addGross(goss) {
     goss.forEach(elem => {
         let goss = document.createElement('div')
         goss.className = "gossip"
