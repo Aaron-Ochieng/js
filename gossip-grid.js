@@ -1,82 +1,88 @@
-import { gossips } from './data.js'
-export function grid() {
-    let allChange = document.createElement('div')
-    allChange.className = 'ranges'
-    let width = document.createElement('input')
-    width.className = 'range'
-    width.id = 'width'
-    width.type = 'range'
-    width.value = ''
-    width.min = '200'
-    width.max = '800'
-    width.addEventListener('input', function () {
-        let gos = document.querySelectorAll('.gossip')
-        gos.forEach(e => {
-            e.style.width = width.value + 'px'
-        })
-    })
+import { gossips } from "./gossip-grid.data.js";
 
-    let fontSize = document.createElement('input')
-    fontSize.className = 'range'
-    fontSize.id = 'fontSize'
-    fontSize.type = 'range'
-    fontSize.min = '20'
-    fontSize.max = '40'
-    fontSize.value = ''
-    fontSize.addEventListener('input', function () {
-        let gos = document.querySelectorAll('.gossip')
-        gos.forEach(e => {
-            e.style.fontSize = fontSize.value + 'px'
-        })
-    })
+function grid() {
+    //Ranges
+    ranges();
+    // First gossip card, with a form to add new gossips
+    let form = document.createElement("form");
+    form.classList.add("gossip");
+    let textarea = document.createElement("textarea");
+    let button = document.createElement("button");
+    button.innerHTML = "Share gossip!";
+    button.type = "submit";
+    button.addEventListener("click", (e) => {
+        e.preventDefault();
+        let gossip = textarea.value;
+        if (gossip.length > 0) {
+            gossips.unshift(gossip);
+            document.querySelectorAll(".gossip").forEach((card, i) => {
+                if (i > 0) card.remove();
+            });
+            textarea.value = "";
+            renderGossips();
+        }
+    });
+    form.appendChild(textarea);
+    form.appendChild(button);
+    document.body.appendChild(form);
 
-    let background = document.createElement('input')
-    background.className = 'range'
-    background.id = 'background'
-    background.type = 'range'
-    background.min = '20'
-    background.max = '75'
-    background.value = ''
-    background.addEventListener('input', function () {
-        let gos = document.querySelectorAll('.gossip')
-        gos.forEach(e => {
-            e.style.background = " hsl(280, 50%," + background.value + "%)"
-        })
-        console.log(background.value)
-    })
-
-    allChange.appendChild(width)
-    allChange.appendChild(fontSize)
-    allChange.appendChild(background)
-    document.body.appendChild(allChange)
-
-    let share = document.createElement("form")
-    share.className = "gossip"
-    document.body.appendChild(share)
-    let textarea = document.createElement("textarea")
-    textarea.setAttribute("placeholder", "Got a gossip to share?")
-    share.appendChild(textarea)
-    let button = document.createElement("button")
-    button.innerHTML = "Share gossip!"
-    share.appendChild(button)
-    button.addEventListener("click", function () {
-        let val = textarea.value
-        let goss1 = document.createElement('div')
-        goss1.className = "gossip"
-        goss1.textContent = val
-        document.body.insertBefore(goss1, document.querySelectorAll('.gossip')[1])
-        textarea.value = ""
-        event.preventDefault()
-    })
-    addGross(gossips)
-
-
+    // All other gossip cards
+    renderGossips();
 }
-function addGross(goss) {
-    goss.forEach(elem => {
-        let goss = document.createElement('div')
-        goss.className = "gossip"
-        goss.innerHTML = elem
-        document.body.appendChild(goss)
-    })
+
+function renderGossips() {
+    gossips.forEach((gossip) => {
+        let div = document.createElement("div");
+        div.classList.add("gossip");
+        div.innerHTML = gossip;
+        document.body.appendChild(div);
+    });
 }
+
+function ranges() {
+    // Ranges
+    let ranges = document.createElement("div");
+    ranges.classList.add("ranges");
+    let widthRange = document.createElement("input");
+    widthRange.type = "range";
+    widthRange.id = "width";
+    widthRange.min = "200";
+    widthRange.max = "800";
+    widthRange.value = "400";
+    widthRange.addEventListener("input", (e) => {
+        let cards = document.querySelectorAll(".gossip");
+        cards.forEach((card) => {
+            card.style.width = e.target.value + "px";
+        });
+    });
+    let fontSizeRange = document.createElement("input");
+    fontSizeRange.type = "range";
+    fontSizeRange.id = "fontSize";
+    fontSizeRange.min = "20";
+    fontSizeRange.max = "40";
+    fontSizeRange.value = "30";
+    fontSizeRange.addEventListener("input", (e) => {
+        let cards = document.querySelectorAll(".gossip");
+        cards.forEach((card) => {
+            card.style.fontSize = e.target.value + "px";
+        });
+    });
+    let backgroundColorRange = document.createElement("input");
+    backgroundColorRange.type = "range";
+    backgroundColorRange.id = "background";
+    backgroundColorRange.min = "20";
+    backgroundColorRange.max = "75";
+    backgroundColorRange.value = "50";
+    backgroundColorRange.addEventListener("input", (e) => {
+        let cards = document.querySelectorAll(".gossip");
+        cards.forEach((card) => {
+            card.style.backgroundColor = `hsl(280, 50%, ${e.target.value}%)`;
+        });
+    });
+    ranges.appendChild(widthRange);
+    ranges.appendChild(fontSizeRange);
+    ranges.appendChild(backgroundColorRange);
+    document.body.appendChild(ranges);
+}
+
+export { grid };
