@@ -1,6 +1,7 @@
 const obj1 = { arr: [1, "2"] }; const obj2 = { arr: [2] }
 const test1 = { arr: [], arr1: [5] }; const test2 = { arr: [10, 3], arr1: [15, 3], arr2: ["7", "1"] }
 const testStr = { str: "salem" }; const testStr2 = { str: "alem" }
+const aaaa = { nbr: 12 }; const bbbb = { nbr: 23 }
 
 // for (const [key, value] of Object.entries(object1)) {
 //     console.log(`${key}: ${value}`);
@@ -26,7 +27,7 @@ const fusion = (...obj) => {
             }
         }
     }
-    console.log(result);
+    return result
 }
 
 
@@ -37,4 +38,4 @@ is.arr = (n) => Array.isArray(n);
 is.obj = (n) => typeof n === "object" && !is.fun(n) && !is.arr(n) && n !== null;
 is.fun = (n) => typeof n === "function";
 
-fusion(test1, test2)
+console.log(fusion(aaaa, bbbb))
