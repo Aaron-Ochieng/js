@@ -21,8 +21,10 @@ const mapValues = (obj, fn) => {
 }
 console.log(mapValues(nutrients, (v) => v + 1))
 
-const reduceValues = (obj, fn) => {
-    let acc = 0;
+const reduceValues = (obj, fn , acc) => {
+    if ( acc === undefined){
+        acc = 0
+    };
     for (let key in obj) {
         acc = fn(acc, obj[key], key, obj);
     }
