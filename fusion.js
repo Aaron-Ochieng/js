@@ -18,7 +18,7 @@ const fusion = (obj1, obj2) => {
             } else if (is.num(obj1[key]) && is.num(obj2[key])) {
                 obj1[key] +=  obj2[key]; // Properly initializing valX
             } else if (is.str(obj1[key]) && is.str(obj2[key])) {
-                obj1[key] = " " + obj2[key]; // Properly initializing valX
+                obj1[key] += " " + obj2[key]; // Properly initializing valX
             } else {
                 obj1[key] = obj2[key]
             }
