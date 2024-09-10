@@ -12,7 +12,7 @@ const fusion = (obj1, obj2) => {
     for (let key in obj2) {
         if (key in obj1) {
             if (is.arr(obj1[key]) && is.arr(obj2[key])) {
-                obj1[key] = [...obj1, ...obj2] // Corrected recursive call
+                obj1[key] = [...obj1[key], ...obj2[key]] // Corrected recursive call
             } else if (is.obj(obj1[key])  && is.obj(obj2[key])) {
                 obj1[key] = fusion(obj1[key], obj2[key]); // Properly initializing valX
             } else if (is.num(obj1[key]) && is.num(obj2[key])) {
@@ -39,7 +39,7 @@ is.arr = (n) => Array.isArray(n);
 is.obj = (n) => typeof n === "object" && !is.fun(n) && !is.arr(n) && n !== null;
 is.fun = (n) => typeof n === "function";
 
-console.log(fusion({ a: { b: 1 } }, { a: 1 , x : []}))
+console.log(fusion({ arr: [1, '2'] }, { arr: [2] }))
 console.assert(
     JSON.stringify(fusion({ a: { b: 1 } }, { a: 1 }).a) === JSON.stringify(1),
     "Test #10 Failed"
