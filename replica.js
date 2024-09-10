@@ -1,7 +1,7 @@
 const replica = (target, ...sources) => {
     sources.forEach((source) => {
         Object.keys(source).forEach((key) => {
-            if (is.obj(source[key])) {
+            if (isObj(source[key])) {
                 if (!target.hasOwnProperty(key) || !isObj(target[key])) {
                     target[key] = {};
                 }
