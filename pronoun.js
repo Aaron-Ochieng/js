@@ -19,11 +19,11 @@ const pronoun = (sentence) => {
         if (reference[word]) {
             const nextWord = new_arr[i + 1]; 
             if (result[word]) {
-                result[word].words.push(nextWord || '');
+                result[word].word.push(nextWord || '');
                 result[word].count += 1;
             } else {
                 result[word] = {
-                    words: nextWord && !reference[nextWord] ? [nextWord] : [],
+                    word: nextWord && !reference[nextWord] ? [nextWord] : [],
                     count: 1,
                 };
             }
@@ -33,4 +33,6 @@ const pronoun = (sentence) => {
 }
 
 
-console.log(pronoun(ex))
+console.log(pronoun(`The seal method seals an object, preventing new properties from being
+added to it and marking all existing properties as non-configurable. Values of present 
+properties can still be changed as long as they are writable.`))
