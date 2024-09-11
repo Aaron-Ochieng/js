@@ -8,16 +8,19 @@ const reference = {
     it: 'it',
     they: 'they',
     we: 'we',
+    i: 'i'
 }
 
 const pronoun = (sentence) => {
     let result = {};
-    const new_arr = sentence.split(' ');
+    const new_arr = sentence.split('\n').join(' ').split(',').join(' ').split(' ').filter(val => val != '');
+
+    console.log(new_arr)
 
     for (let i = 0; i < new_arr.length; i++) {
-        const word = new_arr[i];
+        const word = new_arr[i].toLowerCase();
         if (reference[word]) {
-            const nextWord = new_arr[i + 1]; 
+            const nextWord = new_arr[i + 1];
             if (result[word]) {
                 result[word].word.push(nextWord || '');
                 result[word].count += 1;
@@ -33,6 +36,8 @@ const pronoun = (sentence) => {
 }
 
 
-console.log(pronoun(`The seal method seals an object, preventing new properties from being
-added to it and marking all existing properties as non-configurable. Values of present 
-properties can still be changed as long as they are writable.`))
+// console.log(pronoun(`The seal method seals an object, preventing new properties from being
+// added to it and marking all existing properties as non-configurable. Values of present 
+// properties can still be changed as long as they are writable.`))
+
+console.log(pronoun('I buy,\ni to,\nYOU buy,\nit have,\nIt buys,\nit is,\nyou go'))
