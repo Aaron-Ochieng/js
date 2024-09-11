@@ -14,9 +14,6 @@ const reference = {
 const pronoun = (sentence) => {
     let result = {};
     const new_arr = sentence.split('\n').join(' ').split(',').join(' ').split(' ').filter(val => val != '');
-
-    console.log(new_arr)
-
     for (let i = 0; i < new_arr.length; i++) {
         const word = new_arr[i].toLowerCase();
         if (reference[word]) {
@@ -40,4 +37,5 @@ const pronoun = (sentence) => {
 // added to it and marking all existing properties as non-configurable. Values of present 
 // properties can still be changed as long as they are writable.`))
 
-console.log(pronoun('I buy,\ni to,\nYOU buy,\nit have,\nIt buys,\nit is,\nyou go'))
+// console.log(pronoun('I buy,\ni to,\nYOU buy,\nit have,\nIt buys,\nit is,\nyou go'))
+console.log(pronoun(`it i it she is gone`))
