@@ -13,22 +13,28 @@ const reference = {
 
 const pronoun = (sentence) => {
     let result = {};
-    const new_arr = sentence.split('\n').join(' ').split(',').join(' ').split(' ').filter(val => val != '');
+    const new_arr = sentence.split('\n').join(' ').split(',').join(' ').split(' ').filter(val => val !== '');
+
     for (let i = 0; i < new_arr.length; i++) {
-        const word = new_arr[i].toLowerCase();
-        if (reference[word]) {
-            const nextWord = new_arr[i + 1];
-            if (result[word]) {
-                result[word].word.push(nextWord || '');
-                result[word].count += 1;
-            } else {
-                result[word] = {
-                    word: nextWord && !reference[nextWord] ? [nextWord] : [],
-                    count: 1,
+        const currentWord = new_arr[i].toLowerCase();
+        const nextWord = new_arr[i + 1] ? new_arr[i + 1].toLowerCase() : '';
+
+        if (reference[currentWord]) {
+            if (!result[currentWord]) {
+                result[currentWord] = {
+                    word: [],
+                    count: 0,
                 };
             }
+
+            if (nextWord && !reference[nextWord]) {
+                result[currentWord].word.push(nextWord);
+            }
+
+            result[currentWord].count += 1;
         }
     }
+
     return result;
 }
 
