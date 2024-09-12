@@ -1,30 +1,28 @@
-const flags = (options) => {
-    let flagInfo = {
-        aliases: { h: "help" },
-        description: ""
-    };
-
-    for (const [flagName, flagValue] of Object.entries(options)) {
-        if (flagName !== "help") {
-            flagInfo.aliases[flagName.charAt(0)] = flagName; // Use charAt instead of at
-        } else {
-            for (const helpFlag of options["help"]) {
-                flagInfo.description += `-${helpFlag.charAt(0)}, --${helpFlag}: ${options[helpFlag]}\n`;
-            }
-        }
-        if (!options["help"]) {
-            flagInfo.description += `-${flagName.charAt(0)}, --${flagName}: ${flagValue}\n`;
-        }
+function flags(obj) {
+    var res = { alias: { h: 'help' } };
+    if (obj.length === 0) return res;
+    let help = obj.help;
+    delete obj.help;
+    for (let key in obj) {
+        res.alias[key[0]] = key;
     }
-
-    flagInfo.description = flagInfo.description.trim(); // Use trim to remove last newline character
-
-    return flagInfo;
+    if (help) {
+        res.description = help.map((key) => {
+            let desc = obj[key];
+            return `-${key[0]}, --${key}: ${desc}`;
+        });
+    } else {
+        res.description = Object.keys(obj).map((key) => {
+            let desc = obj[key];
+            return `-${key[0]}, --${key}: ${desc}`;
+        });
+    }
+    res.description.length === 0
+        ? (res.description = '')
+        : res.description.length === 1
+            ? (res.description = res.description[0])
+            : (res.description = res.description.join('\n'));
+    return res;
 }
 
-const object = {
-    multiply: 'multiply the values',
-    divide: 'divides the values',
-    help: ['divide']
-}
-console.log(flags(object))
+console.log(flags({}))
