@@ -1,20 +1,12 @@
-function interpolation({
-    step = 0,
-    start = 0,
-    end = 0,
-    cb = () => { },
-    duration = 0,
-} = {}) {
-    const delta = (end - start) / step;
-    let current = start;
-    let i = 0;
-    const timer = setInterval(() => {
-        if (i < step) {
-            current += delta;
-            i++;
-        } else {
-            clearInterval(timer);
-            cb([current, duration]);
-        }
-    }, duration / step);
+// Nkt 3rd snapping 
+
+const interpolation = (obj) => {
+    const { step, start, end, callback, duration } = obj
+    let i = 0
+    const interval = duration / step
+    let timer = setInterval(() => {
+        callback([((end - start) / step * i) + start, interval * (i + 1)])
+        i++
+        if (i === step) clearInterval(timer)
+    }, interval)
 }
