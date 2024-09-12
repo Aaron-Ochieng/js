@@ -10,11 +10,11 @@ function interpolation({
     let i = 0;
     const timer = setInterval(() => {
         if (i < step) {
-            cb([current, (duration / step) * (i + 1)]);
             current += delta;
             i++;
         } else {
             clearInterval(timer);
+            cb([current, duration]);
         }
     }, duration / step);
 }
