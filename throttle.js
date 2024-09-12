@@ -15,11 +15,12 @@ function opThrottle(func, wait, options = { leading: true, trailing: true }) {
     let timeout = null;
     let lastArgs = null;
     let lastThis = null;
+    let result = null;
 
     function invokeFunc() {
         lastCall = Date.now();
         timeout = null;
-        func.apply(lastThis, lastArgs);
+        result = func.apply(lastThis, lastArgs);
         lastArgs = lastThis = null;
     }
 
@@ -32,12 +33,13 @@ function opThrottle(func, wait, options = { leading: true, trailing: true }) {
 
         if (isInvoking) {
             if (options.leading) {
-                invokeFunc();
+                result = func.apply(this, args);
             }
             lastCall = now;
         } else if (options.trailing) {
             clearTimeout(timeout);
             timeout = setTimeout(invokeFunc, wait);
         }
+        return result;
     };
 }
