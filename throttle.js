@@ -10,7 +10,7 @@ function throttle(func, wait) {
         }
     };
 }
-function opThrottle(fn, delay, { leading = false, trailing = true } = {}) {
+function opThrottle(fn, wait, { leading = false, trailing = true } = {}) {
     let last = 0;
     let timer = null;
     return function () {
@@ -18,7 +18,7 @@ function opThrottle(fn, delay, { leading = false, trailing = true } = {}) {
         if (!last && leading === false) {
             last = now;
         }
-        if (now - last > delay) {
+        if (now - last > wait) {
             if (timer) {
                 clearTimeout(timer);
                 timer = null;
@@ -30,7 +30,7 @@ function opThrottle(fn, delay, { leading = false, trailing = true } = {}) {
                 fn.apply(this, arguments);
                 last = +new Date();
                 timer = null;
-            }, delay);
+            }, wait);
         }
     };
 }
