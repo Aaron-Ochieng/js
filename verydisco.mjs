@@ -6,18 +6,10 @@ const veryDiscoWord = (word) => {
 // Main function
 function veryDisco() {
     // Get the command line arguments
-    const args = process.argv.slice(2);
-
-    if (args.length === 0) {
-        console.error("No argument provided. Please provide a sentence.");
-        process.exit(1);
-    }
-
-    // Join the arguments into a single string (in case of multi-word arguments)
-    const sentence = args.join(' ');
+    const args = process.argv.slice(2)[0];
 
     // Split sentence into words, apply the "very disco" transformation, and join them back
-    const discoSentence = sentence
+    const discoSentence = args
         .split(' ')
         .map(veryDiscoWord)
         .join(' ');
