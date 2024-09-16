@@ -15,8 +15,8 @@ try {
         const [lastname, firstnameWithExt] = file.split('_');
         const firstname = firstnameWithExt.split('.')[0]; 
         return {
-            lastname: capitalizeFirstLetter(lastname),
-            firstname: capitalizeFirstLetter(firstname)
+            lastname,
+            firstname
         };
     });
 
@@ -33,10 +33,3 @@ try {
     console.error(`Error reading directory: ${error.message}`);
     process.exit(1);
 }
-
-
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
-
-
