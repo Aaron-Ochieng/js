@@ -18,7 +18,7 @@ function veryDisco() {
         .join(' ');
 
     try {
-        writeFileSync('forever.txt', discoSentence, 'utf-8');
+        writeFileSync('verydisco-forever.txt', discoSentence, 'utf-8');
     } catch (error) {
         console.error('Error writing to file:', error);
         process.exit(1);
