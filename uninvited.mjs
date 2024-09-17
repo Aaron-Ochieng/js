@@ -2,6 +2,8 @@ import fs from 'fs/promises';
 import http from 'http';
 import path from 'path';
 
+const port = 5000
+const guest_dir = 'guests'
 const server = http.createServer(async (req, res) => {
     if (req.method === 'POST') {
         let body = '';
@@ -12,9 +14,9 @@ const server = http.createServer(async (req, res) => {
         req.on('end', async () => {
             try {
                 let guest_name = req.url.slice(1);
-                const filepath = path.join('guests', `${guest_name}.json`);
+                const filepath = path.join(guest_dir, `${guest_name}.json`);
 
-                await fs.writeFile(filepath, body, { flag: 'wx' });
+                await fs.writeFile(filepath, body);
                 res.writeHead(201, { 'Content-Type': 'application/json' });
                 res.end(body);
             } catch (e) {
@@ -29,6 +31,6 @@ const server = http.createServer(async (req, res) => {
     }
 });
 
-server.listen(5000, () => {
-    console.log('Listening on port 5000');
+server.listen(port, () => {
+    console.log(`Listening on port ${port}`);
 });
