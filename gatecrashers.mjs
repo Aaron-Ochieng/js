@@ -1,6 +1,7 @@
 import http from 'http'
 import fs from 'fs'
 import url from 'url'
+import path from 'path'
 const PORT = 5000;
 
 const authorizedUsers = {
@@ -40,7 +41,7 @@ const server = http.createServer((req, res) => {
 
         req.on('end', () => {
             // Create a JSON file with the guest's data
-            fs.writeFile(`${guestName}.json`, body, (err) => {
+            fs.writeFile(path.join('guests',`${guestName}.json`), body, (err) => {
                 if (err) {
                     res.writeHead(500, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ message: 'Error saving guest data' }));
