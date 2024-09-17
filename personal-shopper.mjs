@@ -44,7 +44,6 @@ const main = async () => {
     }
 
     let list = await loadList(filename);
-
     switch (command) {
         case 'create':
             if (existsSync(filename)) {
@@ -88,7 +87,8 @@ const main = async () => {
                 return;
             }
             if (quantity === undefined) {
-                delete list[elem];
+                delete list[elem]
+                await saveList(filename,list)
                 console.log(`Removed ${elem} from the list.`);
             } else if (isNaN(quantity)) {
                 console.error('Unexpected request: nothing has been removed.');
