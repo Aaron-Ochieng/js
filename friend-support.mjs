@@ -8,13 +8,11 @@ const send_json_reponse = (res, statusCode, data) => {
     res.end(JSON.stringify(data));
 };
 
-
 const server = createServer(async (req, res) => {
     if (req.method === 'GET') {
         const guestName = req.url.slice(1);
-
         if (guestName) {
-            const filePath = join(process.cwd(), `${guestName}.json`);
+            const filePath = join(process.cwd(),'guests', `${guestName}.json`);
             try {
                 const fileContent = await readFile(filePath, 'utf-8');
                 const guestData = JSON.parse(fileContent);
