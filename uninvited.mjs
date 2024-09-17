@@ -9,13 +9,11 @@ const sendJSONResponse = (res, statusCode, data) => {
 
 const server = createServer(async (req, res) => {
     if (req.method === 'POST') {
-        const guestName = req.url.slice(1);  // Extract guest name from the URL, e.g., "/Ronaldinho" -> "Ronaldinho"
-
+        const guestName = req.url.slice(1);
         if (!guestName) {
             sendJSONResponse(res, 400, { error: 'Bad Request: Missing guest name in URL' });
             return;
         }
-
         let body = '';
         req.on('data', chunk => {
             body += chunk;
@@ -23,14 +21,16 @@ const server = createServer(async (req, res) => {
 
         req.on('end', async () => {
             try {
-                const guestDetails = JSON.parse(body);
-                if (!guestDetails) {
-                    sendJSONResponse(res, 400, { error: 'Bad Request: Missing guest details' });
+                let guestDetails;
+                try {
+                    guestDetails = JSON.parse(body);
+                } catch (parseError) {
+                    sendJSONResponse(res, 400, { error: 'Bad Request: Invalid JSON format' });
                     return;
                 }
-                const filePath = join(process.cwd(), 'guests', `${guestName}.json`)
+                const filePath = join(process.cwd(), 'guests', `${guestName}.json`);
                 await writeFile(filePath, JSON.stringify(guestDetails, null, 2), 'utf-8');
-                sendJSONResponse(res, 201,  guestDetails );
+                sendJSONResponse(res, 201, { message: 'Guest added/updated successfully', guestName, guestDetails });
             } catch (error) {
                 sendJSONResponse(res, 500, { error: 'server failed' });
             }
