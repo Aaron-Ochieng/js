@@ -22,7 +22,7 @@ const server = http.createServer(async (req, res) => {
             } catch (e) {
                 console.log(e);
                 res.writeHead(500, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ error: 'Server failed' }));
+                res.end(JSON.stringify({ error: 'server failed' }));
             }
         });
     } else {
