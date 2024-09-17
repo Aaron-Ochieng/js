@@ -9,6 +9,13 @@ const sendJSONResponse = (res, statusCode, data) => {
 
 const server = createServer(async (req, res) => {
     if (req.method === 'POST') {
+        const guestName = req.url.slice(1);  // Extract guest name from the URL, e.g., "/Ronaldinho" -> "Ronaldinho"
+
+        if (!guestName) {
+            sendJSONResponse(res, 400, { error: 'Bad Request: Missing guest name in URL' });
+            return;
+        }
+
         let body = '';
         req.on('data', chunk => {
             body += chunk;
@@ -16,16 +23,14 @@ const server = createServer(async (req, res) => {
 
         req.on('end', async () => {
             try {
-                const guestData = JSON.parse(body);
-                const { guestName, details } = guestData;
-
-                if (!guestName || !details) {
-                    sendJSONResponse(res, 400, { error: 'Bad Request: Missing guestName or details' });
+                const guestDetails = JSON.parse(body);
+                if (!guestDetails) {
+                    sendJSONResponse(res, 400, { error: 'Bad Request: Missing guest details' });
                     return;
                 }
-                const filePath = join(process.cwd(), 'guests', `${guestName}.json`);
-                await writeFile(filePath, JSON.stringify(details, null, 2), 'utf-8');
-                sendJSONResponse(res, 201, { message: 'Guest added/updated successfully', guestName, details });
+                const filePath = join(process.cwd(), 'guests', `${guestName}.json`)
+                await writeFile(filePath, JSON.stringify(guestDetails, null, 2), 'utf-8');
+                sendJSONResponse(res, 201,  guestDetails );
             } catch (error) {
                 sendJSONResponse(res, 500, { error: 'server failed' });
             }
