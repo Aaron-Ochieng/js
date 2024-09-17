@@ -28,7 +28,7 @@ const server = createServer(async (req, res) => {
                     sendJSONResponse(res, 400, { error: 'Bad Request: Invalid JSON format' });
                     return;
                 }
-                const filePath = join(process.cwd(), 'guests', `${guestName}.json`);
+                const filePath = join(process.cwd(), `${guestName}.json`);
                 await writeFile(filePath, JSON.stringify(guestDetails, null, 2), 'utf-8');
                 sendJSONResponse(res, 201, { message: 'Guest added/updated successfully', guestName, guestDetails });
             } catch (error) {
