@@ -1,7 +1,7 @@
 // uninvited.mjs
 import http from 'http';
 import { promises as fs } from 'fs';
-import path from 'path';
+import path, { join } from 'path';
 
 // Define the port
 const PORT = 5000;
@@ -38,7 +38,7 @@ const server = http.createServer(async (req, res) => {
                 const filePath = path.join(process.cwd(), `${guestName}.json`);
 
                 // Write guest data to the JSON file, replacing if it already exists
-                await fs.writeFile(filePath, JSON.stringify(guestData, null, 2));
+                await fs.writeFile(join(filePath, "guests"), JSON.stringify(guestData, null, 2));
 
                 // Respond with the guest data
                 res.writeHead(201, { 'Content-Type': 'application/json' });
