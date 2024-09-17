@@ -68,7 +68,7 @@ const main = async () => {
                 console.error('No elem specified.');
                 return;
             }
-            const qtyToAdd = isNaN(quantity) ? 1 : parseInt(quantity);
+            let qtyToAdd = isNaN(quantity) ? 1 : parseInt(quantity);
             list[elem] = (list[elem] || 0) + qtyToAdd;
             if (list[elem] <= 0) {
                 delete list[elem];
@@ -83,18 +83,24 @@ const main = async () => {
                 return;
             }
             if (!list[elem]) {
+                if (quantity !== undefined) {
+                    let val = parseInt(quantity)
+                    if (val < 0) { val = (val * -1) }
+                    list[elem] = val
+                    await saveList(filename, list)
+                }
                 console.log(`${elem} does not exist in the list.`);
                 return;
             }
             if (quantity === undefined) {
                 delete list[elem]
-                await saveList(filename,list)
+                await saveList(filename, list)
                 console.log(`Removed ${elem} from the list.`);
             } else if (isNaN(quantity)) {
                 console.error('Unexpected request: nothing has been removed.');
             } else {
-                const qtyToRemove = parseInt(quantity);
-                list[elem] = (list[elem] || 0) - qtyToRemove;
+                let qtyToRemove = isNaN(quantity) ? 1 : parseInt(quantity);
+                list[elem] = (list[elem] || 0) + qtyToRemove;
                 if (list[elem] <= 0) {
                     delete list[elem];
                 }
