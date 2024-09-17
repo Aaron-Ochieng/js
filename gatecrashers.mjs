@@ -13,7 +13,7 @@ const authorized_users = {
 }
 
 const parse_auth_header = (auth_header) => {
-    if (!auth_header || !auth_header.startsWith('Basic')) {
+    if (!auth_header || !auth_header.startsWith('Basic ')) {
         return null;
     }
     const credentials = auth_header.slice(6);
@@ -23,7 +23,7 @@ const parse_auth_header = (auth_header) => {
 
 const server = createServer((req, res) => {
     const auth = parse_auth_header(req.headers.authorization);
-    if (!auth || !authorized_users[auth.username] || !authorized_users[auth.password] !== auth.password) {
+    if (!auth || !authorized_users[auth.username] || !authorized_users[auth.username] !== auth.password) {
         res.writeHead(401, {
             'Content-Type': 'application/json',
             'www-authenticate': 'Basic realm="Restricted Area"'
@@ -58,6 +58,9 @@ const server = createServer((req, res) => {
                 res.end(JSON.stringify({ error: 'Internal Server Error' }))
             }
         });
+    } else {
+        res.writeHead(405, { 'Content-Type': 'application/json' })
+        res.end(JSON.stringify({ error: 'Method not allowed' }))
     }
 })
 
