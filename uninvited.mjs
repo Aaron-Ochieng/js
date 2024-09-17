@@ -14,8 +14,7 @@ const server = http.createServer(async (req, res) => {
 
         if (!guestName) {
             res.writeHead(400, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Guest name is required' }));
-            return;
+            return res.end(JSON.stringify({ error: 'A guest name is required.' }));
         }
 
         // Get the request body
@@ -26,8 +25,14 @@ const server = http.createServer(async (req, res) => {
 
         req.on('end', async () => {
             try {
-                // Parse the body as JSON
-                const guestData = JSON.parse(body);
+                // Parse the body as JSON. If there's an issue, respond with 400.
+                let guestData;
+                try {
+                    guestData = JSON.parse(body);
+                } catch (parseError) {
+                    res.writeHead(400, { 'Content-Type': 'application/json' });
+                    return res.end(JSON.stringify({ error: 'Invalid JSON format.' }));
+                }
 
                 // Define the path for the guest file
                 const filePath = path.join(process.cwd(), `${guestName}.json`);
