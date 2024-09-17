@@ -18,7 +18,7 @@ const parse_auth_header = (auth_header) => {
 
 const server = http.createServer((req, res) => {
     const auth = parse_auth_header(req.headers.authorization);
-    if (!auth, !authorized_users[auth.username] || authorized_users[auth.username] !== auth.password) {
+    if (!auth || !authorized_users[auth.username] || authorized_users[auth.username] !== auth.password) {
         res.writeHead(401, {
             'Content-Type': 'application/json',
             'WWW-Authenticate': 'Basic realm="Authorization Required"'
