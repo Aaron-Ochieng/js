@@ -100,6 +100,9 @@ const main = async () => {
                 console.error('Unexpected request: nothing has been removed.');
             } else {
                 let qtyToRemove = isNaN(quantity) ? 1 : parseInt(quantity);
+                if (qtyToRemove > 0) {
+                    qtyToRemove *= -1
+                }
                 list[elem] = (list[elem] || 0) + qtyToRemove;
                 if (list[elem] <= 0) {
                     delete list[elem];
