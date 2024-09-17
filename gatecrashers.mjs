@@ -1,10 +1,10 @@
-import http, { createServer } from 'http'
+import { createServer } from 'http'
 import fs from 'fs/promises'
 import path from 'path'
-import { json } from 'node:stream/consumers'
 
 const base_dir = process.env.TEST_TMP_PATH || process.cwd()
-const guest_dir = path.join('guests')
+const guest_dir = path.join(base_dir, 'guests')
+const port = 5000
 
 const authorized_users = {
     'Caleb_Squires': 'abracadabra',
@@ -47,8 +47,20 @@ const server = createServer((req, res) => {
                 }
 
                 const guest_name = req.url.slice(1)
-                await fs.mkdir(guest_dir, `${guest_name}`)
+                await fs.mkdir(guest_dir, { recursive: true })
+
+                const file_path = path.join(guest_dir, `${guest_name}.json`)
+                await fs.writeFile(file_path, JSON.stringify(body, null, 2))
+                res.writeHead(200, { 'Content-Type': 'application/json' })
+                res.end(JSON.stringify(body))
+            } catch (e) {
+                res.writeHead(500, { 'Content-Type': 'application/json' })
+                res.end(JSON.stringify({ error: 'Internal Server Error' }))
             }
-        })
+        });
     }
+})
+
+server.listen(port, () => {
+    console.log(`server listening on port ${port}`)
 })
