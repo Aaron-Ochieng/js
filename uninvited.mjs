@@ -1,46 +1,62 @@
-import { createServer } from 'http';
-import { writeFile } from 'fs/promises';
-import { join } from 'path';
+// uninvited.mjs
+import http from 'http';
+import { promises as fs } from 'fs';
+import path from 'path';
 
-const sendJSONResponse = (res, statusCode, data) => {
-    res.writeHead(statusCode, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(data));
-};
+// Define the port
+const PORT = 5000;
 
-const server = createServer(async (req, res) => {
+// Create an HTTP server
+const server = http.createServer(async (req, res) => {
     if (req.method === 'POST') {
-        const guestName = req.url.slice(1);
+        // Extract guest name from the URL path
+        const guestName = req.url.slice(1); // Remove the leading '/'
+
         if (!guestName) {
-            sendJSONResponse(res, 400, { error: 'Bad Request: Missing guest name in URL' });
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Guest name is required' }));
             return;
         }
+
+        // Get the request body
         let body = '';
         req.on('data', chunk => {
-            body += chunk;
+            body += chunk.toString(); // Convert Buffer to string
         });
 
         req.on('end', async () => {
             try {
-                let guestDetails;
-                try {
-                    guestDetails = JSON.parse(body);
-                } catch (parseError) {
-                    sendJSONResponse(res, 400, { error: 'Bad Request: Invalid JSON format' });
-                    return;
-                }
-                const filePath = join(process.cwd(), `${guestName}.json`);
-                await writeFile(filePath, JSON.stringify(guestDetails, null, 2), 'utf-8');
-                sendJSONResponse(res, 201, { message: 'Guest added/updated successfully', guestName, guestDetails });
+                // Parse the body as JSON
+                const guestData = JSON.parse(body);
+
+                // Define the path for the guest file
+                const filePath = path.join(process.cwd(), `${guestName}.json`);
+
+                // Write guest data to the JSON file, replacing if it already exists
+                await fs.writeFile(filePath, JSON.stringify(guestData, null, 2));
+
+                // Respond with the guest data
+                res.writeHead(201, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify(guestData));
             } catch (error) {
-                sendJSONResponse(res, 500, { error: 'server failed' });
+                console.error('Error processing request:', error);
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'Server failed' }));
             }
+        });
+
+        req.on('error', (error) => {
+            console.error('Request error:', error);
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Server failed' }));
         });
     } else {
         res.writeHead(405, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Method Not Allowed' }));
+        res.end(JSON.stringify({ error: 'Method not allowed' }));
     }
 });
-const port = 5000;
-server.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
+
+// Start the server and listen on the specified port
+server.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
 });
