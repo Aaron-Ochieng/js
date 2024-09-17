@@ -21,9 +21,16 @@ try {
     });
 
     guests.sort((a, b) => {
-        if (a.lastname < b.lastname) return -1;
-        if (a.lastname > b.lastname) return 1;
-        return a.firstname.localeCompare(b.firstname);
+        const isANumeric = /^\d/.test(a.lastname); // Check if a.lastname starts with a number
+        const isBNumeric = /^\d/.test(b.lastname); // Check if b.lastname starts with a number
+
+        if (isANumeric && !isBNumeric) return -1; // 'a' starts with number, so it should come first
+        if (!isANumeric && isBNumeric) return 1;  // 'b' starts with number, so it should come first
+
+        // If both are numeric or both are not numeric, apply normal sorting
+        if (a.lastname.toLowerCase() < b.lastname.toLowerCase()) return -1;
+        if (a.lastname.toLowerCase() > b.lastname.toLowerCase()) return 1;
+        return a.firstname.toLowerCase().localeCompare(b.firstname.toLowerCase());
     });
 
     guests.forEach((guest, index) => {
