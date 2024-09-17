@@ -5,7 +5,7 @@ import path from 'path';
 
 // Define the port
 const PORT = 5000;
-const GUESTS_DIR = path.join(process.cwd(), 'guests');
+const GUESTS_DIR = path.join(process.cwd());
 
 // Create the guests directory if it doesn't exist
 await fs.mkdir(GUESTS_DIR, { recursive: true });
