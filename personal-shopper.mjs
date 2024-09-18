@@ -1,129 +1,108 @@
-import { readFile, writeFile, unlink } from 'fs/promises';
-import { existsSync } from 'fs';
+import { readFile, writeFile, rm } from "fs/promises";
 
-// Helper function to print the list
-const printList = (list) => {
-    if (Object.keys(list).length === 0) {
-        console.log('Empty list.');
-    } else {
-        for (const [item, count] of Object.entries(list)) {
-            console.log(`- ${item} (${count})`);
+const filename = (!process.argv[2] || process.argv[2].length === 0) ? 'help' : process.argv[2];
+
+const option = process.argv[3] ?? 'help';
+const item = process.argv[4];
+const numberString = process.argv[5];
+
+async function createFile(filename) {
+    await writeFile(filename, JSON.stringify({}));
+}
+
+async function removeFile(filename) {
+    await rm(filename, { force: true });
+}
+
+const printShopList = async (filename) => {
+    readFile(filename).then((content) => {
+        try {
+            let items = Object.entries(JSON.parse(content.toString()));
+            if (items.length === 0) { console.log(`Empty list.`); return; }
+            let listOutputForm = items.reduce((resStr, [name, quantity]) => `${resStr}- ${name} (${quantity})\n`, '');
+            console.log(listOutputForm)
+        } catch (e) { console.error('Invalide format of the list: ' + e.message); }
+    }).catch(e => console.error('Cannot read list: ' + e.message));
+}
+const removeItem = async (filename, item, number) => {
+    readFile(filename)
+        .then((content) => {
+            let items = JSON.parse(content);
+            if (!items[item]) return false;
+            if (items[item] <= number) {
+                delete items[item];
+            } else {
+                items[item] -= number;
+            }
+            return items;
+
+        })
+        .then((items) => {
+            if (items !== false) {
+                writeFile(filename, JSON.stringify(items));
+            }
+        })
+        .catch((e) => { console.error('Invalide format of the list: ' + e.message); });
+}
+const addItem = async (filename, item, number) => {
+    readFile(filename)
+        .then((content) => {
+            if (content.length === 0) { return { [item]: number } }
+            let items = JSON.parse(content);
+            if (!items[item]) { items[item] = number; return items; }
+            items[item] += number;
+            return items;
+        })
+        .then((items) => { writeFile(filename, JSON.stringify(items)); })
+        .catch((e) => { console.error('Invalide format of the list: ' + e.message); });
+}
+
+
+
+
+function printHelp() {
+    console.log(
+        ` Commands:
+- create: takes a filename as argument and create it (should have '.json' extension specified)
+- delete: takes a filename as argument and delete it
+- ls: takes a filename as argument and print a list from the file in the console
+- add: add a new element to the list in the file; takes a number as element's quantity, default: 1
+- rm: decrease a given quantity of the element on the list in the file, if no quantity is specified it will remove the element from the list
+- help: print this message`
+    )
+}
+
+
+if (filename == 'help' || option == 'help') { printHelp(); process.exit(); }
+
+let number = parseInt(numberString);
+switch (option) {
+    case 'create': await createFile(filename); break;
+    case 'delete': await removeFile(filename); break;
+    case 'ls': await printShopList(filename); break;
+    case 'add':
+        if (!item) {
+            console.error('No elem specified.');
+            break;
         }
-    }
-};
-
-// Helper function to print the help message
-const printHelp = () => {
-    console.log(`Commands:
-- create: takes a filename as argument and creates it (should have .json extension specified)
-- delete: takes a filename as argument and deletes it
-- add: add a new element to the list (optional quantity)
-- rm: remove an element from the list (optional quantity)
-- ls: ls or no more arguments: print the list in the console
-- help: print all the command lines available, with a description of it (specifications in the examples)`);
-};
-
-// Function to load the list from the file
-const loadList = async (filename) => {
-    if (!existsSync(filename)) return {};
-    const data = await readFile(filename, 'utf-8');
-    return JSON.parse(data);
-};
-
-// Function to save the list to the file
-const saveList = async (filename, list) => {
-    await writeFile(filename, JSON.stringify(list, null, 2), 'utf-8');
-};
-
-const main = async () => {
-    const [, , filename, command, elem, quantity] = process.argv;
-
-    if (!filename || !filename.endsWith('.json')) {
-        console.error('Please provide a valid .json file.');
-        return;
-    }
-
-    let list = await loadList(filename);
-    switch (command) {
-        case 'create':
-            if (existsSync(filename)) {
-                console.log(`${filename} already exists.`);
-            } else {
-                await saveList(filename, {});
-                console.log(`Created ${filename}.`);
-            }
+        if (!number) number = 1;
+        if (number < 0) {
+            await removeItem(filename, item, -number)
+        } else {
+            await addItem(filename, item, number);
+        }
+        break;
+    case 'rm':
+        if (!item) {
+            console.error('No elem specified.');
             break;
-
-        case 'delete':
-            if (existsSync(filename)) {
-                await unlink(filename);
-                console.log(`Deleted ${filename}.`);
-            } else {
-                console.log(`${filename} does not exist.`);
-            }
+        }
+        if (numberString === undefined) {
+            await removeItem(filename, item, Infinity);
             break;
-
-        case 'add':
-            if (!elem) {
-                console.error('No elem specified.');
-                return;
-            }
-            let qtyToAdd = isNaN(quantity) ? 1 : parseInt(quantity);
-            list[elem] = (list[elem] || 0) + qtyToAdd;
-            if (list[elem] <= 0) {
-                delete list[elem];
-            }
-            await saveList(filename, list);
-            console.log(`Added/Updated ${elem} (${list[elem] || 0}) to the list.`);
-            break;
-
-        case 'rm':
-            if (!elem) {
-                console.error('No elem specified.');
-                return;
-            }
-            if (!list[elem]) {
-                if (quantity !== undefined) {
-                    let val = parseInt(quantity)
-                    if (val < 0) { val = (val * -1) }
-                    list[elem] = val
-                    await saveList(filename, list)
-                }
-                console.log(`${elem} does not exist in the list.`);
-                return;
-            }
-            if (quantity === undefined) {
-                delete list[elem]
-                await saveList(filename, list)
-                console.log(`Removed ${elem} from the list.`);
-            } else if (isNaN(quantity)) {
-                console.error('Unexpected request: nothing has been removed.');
-            } else {
-                let qtyToRemove = isNaN(quantity) ? 1 : parseInt(quantity);
-                if (qtyToRemove > 0) {
-                    qtyToRemove *= -1
-                }
-                list[elem] = (list[elem] || 0) + qtyToRemove;
-                if (list[elem] <= 0) {
-                    delete list[elem];
-                }
-                await saveList(filename, list);
-                console.log(`Removed ${qtyToRemove} from ${elem} (remaining: ${list[elem] || 0}).`);
-            }
-            break;
-
-        case 'ls':
-        case undefined:
-            printList(list);
-            break;
-
-        case 'help':
-        default:
-            printHelp();
-            break;
-    }
-};
-
-main().catch(err => {
-    console.error(`Error: ${err.message}`);
-});
+        }
+        if (isNaN(number)) { console.error('Unexpected request: nothing has been removed'); break }
+        if (number < 0) { await addItem(filename, item, -number) } else { await removeItem(filename, item, number); }
+        break;
+    default: console.error('Invalid option: ' + option);
+}
