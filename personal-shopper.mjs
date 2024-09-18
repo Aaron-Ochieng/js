@@ -19,8 +19,8 @@ const printHelp = () => {
 - delete: takes a filename as argument and deletes it
 - add: add a new element to the list (optional quantity)
 - rm: remove an element from the list (optional quantity)
-- ls: prints the list
-- help: shows this help message`);
+- ls: ls or no more arguments: print the list in the console
+- help: print all the command lines available, with a description of it (specifications in the examples)`);
 };
 
 // Function to load the list from the file
